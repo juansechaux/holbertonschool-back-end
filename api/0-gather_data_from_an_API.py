@@ -39,7 +39,7 @@ def display_info():
                 num_of_task += 1
     print(f"Employee {user_name} is done with tasks({num_of_complete_task}/{num_of_task}):")
     for task in list_complete_task:
-        print(task)
+        print(f"\t {task}")
 
 if __name__ == "__main__":
     display_info()

@@ -4,6 +4,7 @@ Python script that, using this REST API, for a given employee ID,
 returns information about his/her todo list progress.
 """
 import csv
+import json
 import requests
 from sys import argv
 
@@ -29,17 +30,19 @@ def display_info():
 
     if todos_response.status_code == 200:
         todos_data = todos_response.json()
-        dict_task = {}
+        list_of_dicts = []
+        return_dict = {}
         for dict in todos_data:
+            dict_task = {}
             if dict.get("userId") == int(employee_id):
-                dict_task['id'] = employee_id
-                dict_task['username'] = user_name
+                dict_task['task'] = (dict.get("title"))
                 dict_task['completed'] = (dict.get("completed"))
-                dict_task['title'] = (dict.get("title"))
-                with open(str(employee_id) + ".csv", 'a',
-                          newline='') as archivo_csv:
-                    writer = csv.writer(archivo_csv, quoting=csv.QUOTE_ALL)
-                    writer.writerow(dict_task.values())
+                dict_task['username'] = user_name
+                list_of_dicts.append(dict_task)
+        return_dict[employee_id] = list_of_dicts
+        with open(str(employee_id) + ".json", 'a', newline='') as json_file:
+            json.dump(return_dict, json_file)
+        # print(return_dict)
 
 
 if __name__ == "__main__":

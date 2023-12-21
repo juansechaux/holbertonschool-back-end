@@ -43,7 +43,7 @@ def display_info():
                     dict_task['completed'] = (dict.get("completed"))
                     list_of_dicts.append(dict_task)
             return_dict[user_id] = list_of_dicts
-        with open("todo_all_employees.json", 'a', newline='') as json_file:
+        with open("todo_all_employees.json", 'w', newline='') as json_file:
             json.dump(return_dict, json_file)
         # print(return_dict.keys())
 
